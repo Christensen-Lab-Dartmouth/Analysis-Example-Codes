@@ -1,0 +1,7 @@
+library(FlowSorted.Blood.EPIC)
+library(FlowSorted.DLPFC.450k)
+library(minfi)
+Mset<-preprocessRaw(FlowSorted.DLPFC.450k)
+Examples_Betas<-getBeta(Mset)
+HiBED_result<-HiBED_deconvolution(Examples_Betas, h=2)
+head(HiBED_result)

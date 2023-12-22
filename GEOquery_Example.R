@@ -1,0 +1,13 @@
+library(dplyr)
+library(R.utils)
+library(minfi)
+library(GEOquery)
+idatFiles <- list.files(".", pattern = "idat.gz$", full = TRUE)
+sapply(idatFiles, gunzip, overwrite = TRUE)
+GSE174555_RGset <- read.metharray.exp(".",force = TRUE)
+
+GSE174555_MSet_noob <- preprocessNoob(GSE174555_RGset)
+GSE174555_betas<-getBeta(GSE174555_MSet_noob)
+GSE174555 <- getGEO("GSE174555", GSEMatrix = TRUE)
+GSE174555_pheno<-pData(GSE174555[[1]])
+save(GSE174555_betas,GSE174555_pheno, file = "GSE174555.RDATA")
